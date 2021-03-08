@@ -1,0 +1,88 @@
+<template>
+  <section
+    @click="close"
+    class="z-20 h-screen w-screen bg-gray-500 fixed top-0 opacity-50"
+  ></section>
+  <div class="absolute inset-0">
+    <div class="flex h-full">
+      <div class="z-30 m-auto bg-white p-2 rounded shadow w-1/5">
+        <div class="p-2 border">
+          <h1 class="text-2xl text-center">Login</h1>
+          <GoogleLogin @close-login-from-google="close" />
+          <p class="my-3 text-center">Or</p>
+
+          <form class="p-2 my-2" @submit.prevent="submit">
+            <div class="my-2">
+              <label>Email or Username:</label>
+              <input
+                ref="emailRef"
+                v-model="email"
+                type="text"
+                class="rounded shadow p-2 w-full"
+              />
+            </div>
+            <div class="my-4">
+              <label>Password:</label>
+              <input
+                v-model="password"
+                type="password"
+                class="rounded shadow p-2 w-full"
+              />
+            </div>
+            <div class="my-4">
+              <button
+                type="submit"
+                class="p-2 rounded shadow-md bg-green-500 text-white w-full"
+              >
+                <span v-if="!isLoading">Login</span>
+                <span v-else>⌛</span>
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import firebase from '../utils/firebase'
+import GoogleLogin from '../components/Login/GoogleLogin'
+
+export default {
+  components: { GoogleLogin },
+  data () {
+    return {
+      email: 'admin@admin.com',
+      password: 'admin123',
+      isLoading: false
+    }
+  },
+  methods: {
+    submit () {
+      this.isLoading = true
+      // submit the form
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          this.email = ''
+          this.password = ''
+          this.isLoading = false
+          this.close()
+        }).catch(e => {
+          console.log(e)
+          this.isLoading = false
+        })
+    },
+    close () {
+      this.$emit('close-login')
+    }
+  },
+  mounted () {
+    this.$refs.emailRef.focus()
+  }
+}
+</script>
+
+<style>
+</style>
