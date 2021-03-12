@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import 'firebase/database'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDJ9jCN9hMKoww8hL92YMoZ2WkeEUv4jcw',
@@ -11,5 +12,8 @@ const firebaseConfig = {
 }
 
 firebase.initializeApp(firebaseConfig)
+
+const db = firebase.database()
+export const chatsRef = db.ref('chats')
 
 export default firebase

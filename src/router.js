@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-const Home = () => import('../views/Home/index.vue')
-const Heroes = () => import('../views/Heroes/index.vue')
-const Calendar = () => import('../views/Calendar/index.vue')
-const Markd = () => import('../views/Markdown/index.vue')
-const Slider = () => import('../views/Slider/index.vue')
-const Calculator = () => import('../views/Calculator/index.vue')
-const ReusableModal = () => import('../views/ReusableModal/index.vue')
-const Chat = () => import('../views/Chat/index.vue')
-const store = () => import('../store/index')
+const Home = () => import('./views/Home/index.vue')
+const Heroes = () => import('./views/Heroes/index.vue')
+const Calendar = () => import('./views/Calendar/index.vue')
+const Markd = () => import('./views/Markdown/index.vue')
+const Slider = () => import('./views/Slider/index.vue')
+const Calculator = () => import('./views/Calculator/index.vue')
+const ReusableModal = () => import('./views/ReusableModal/index.vue')
+const Chat = () => import('./views/Chat/index.vue')
+const store = () => import('./store/index')
 
 const routes = [
   {
@@ -65,7 +65,7 @@ const router = createRouter({
 
 router.beforeEach((to, _, next) => {
   if (to.meta.middleware) {
-    const middleware = require(`.././middleware/${to.meta.middleware}`)
+    const middleware = require(`./middleware/${to.meta.middleware}`)
     if (middleware) {
       middleware.default(next, store)
     } else {

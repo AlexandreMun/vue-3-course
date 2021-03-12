@@ -17,14 +17,15 @@
 
 <script>
 import marked from 'marked'
-import debounce from '../../utils/mixins/debounce'
 // import { ref } from 'vue'
+import useDebounce from '../../utils/composition/useDebounce'
 
 export default {
-  mixins: [debounce],
+
   data () {
     return {
-      text: '# h1 - **bold** - *italic*'
+      text: '# h1 - **bold** - *italic*',
+      debounce: ''
     }
   },
   computed: {
@@ -39,6 +40,7 @@ export default {
     }
   },
   mounted () {
+    this.debounce = useDebounce()
     this.$refs.markdownTextArea.focus()
   }
 }
